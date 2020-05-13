@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var wicket=null;
+        onload=function(){
+        setTimeout(function(){
+            wicket=window.open('','_blank','width=400px,height=500px')
+            let x=window.outerWidth/2-wicket.outerWidth/2
+            let y=window.outerHeight/2-wicket.outerHeight/2
+            wicket.moveTo(x,y)
+        },5000)
+        setTimeout(function(){
+            if(!wicket.closed) wicket.close()
+        },15000)
+        }
+    </script>
+</body>
+</html>

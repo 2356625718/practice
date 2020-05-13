@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            width:100%;
+            height:100%;
+        }
+        #table{
+            border-collapse:collapse;
+            position:absolute;
+            top:80px;
+            left:50%;
+            margin-left:-225px;
+        }
+        tr,th,td{
+            background-color: lightblue;
+            border:1px solid gray;
+            width:150px;
+            height:50px;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+        }
+        #mask{
+            display:none;
+            width:100%;
+            height:100%;
+            background-color:lightslategray;
+            opacity:0.7;
+        }
+        #add{
+            display:none;
+            width:470px;
+            height:300px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left: -210px;
+            margin-top: -175px;
+            background:white;
+        }
+        #one{
+            width:100%;
+            height:20%;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        span{
+            position: relative;
+            right:-130px;
+        }
+        #body{
+            line-height: 80px;
+            text-align: center;
+        }
+        #submit{
+            position:relative;
+            left:50%;
+        }
+        #tianjia{
+            position:absolute;
+            left:50%;
+            top:50%;
+        }
+    </style>
+</head>
+<body>
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td>周雨</td>
+                    <td>201800359</td>
+                    <td><a href="#" id='delete'>Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="tianjia">添加信息</button>
+        <div id="mask"></div>
+        <div id="add">
+            <div id="head">
+                <div id="one">数据添加界面<span id="tuichu">x</span></div>
+            <hr/>
+            </div>
+            <div id="body">
+                姓名：<input type="text" id="name" value=""/></br>
+                学号：<input type="text" id="number" value=""/>
+            </div>
+            <div id="foot">
+                <button type="submit" id="submit">添加信息</button>
+            </div>
+        </div>
+        <script>
+            var mask=document.getElementById('mask')
+            var add=document.getElementById("add")
+            document.getElementById('tianjia').onclick=function(){
+                mask.style.display="block"
+                add.style.display="block"
+            }
+            document.getElementById('tuichu').onclick=function(){
+                    mask.style.display="none"
+                    add.style.display="none"
+            }
+            document.getElementById('submit').onclick=function(){
+                    var name=document.getElementById('name')
+                    var number=document.getElementById('number')
+                    var tr=document.createElement('tr')
+                    var td1=document.createElement('td')
+                    var name1=document.createTextNode(name.value)
+                    td1.appendChild(name1)
+                    tr.appendChild(td1)
+                    var td2=document.createElement('td')
+                    var number1=document.createTextNode(number.value)
+                    td2.appendChild(number1)
+                    tr.appendChild(td2)
+                    var td3=document.createElement('td')
+                    var a3=document.createElement('a')
+                    var delete1=document.createTextNode('Delete')
+                    a3.appendChild(delete1)
+                    a3.onclick=function(){
+                        this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)
+                    }
+                    a3.setAttribute('href','#')
+                    td3.appendChild(a3)
+                    tr.appendChild(td3)
+                    document.getElementById('tbody').appendChild(tr)
+                    name.value=''
+                    number.value=''
+                    mask.style.display="none"
+                    add.style.display="none"
+            }
+            document.getElementById('delete').onclick=function(){
+                this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)
+            }
+        </script>
+</body>
+</html>

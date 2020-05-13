@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            display:flex;
+            width:100%;
+            height:600px;
+            flex-direction:row;
+            justify-content: center;
+            align-items: center;
+        }
+        tr{
+            flex:1;
+        }
+        #item3{
+            position:absolute;
+            left:150px;
+        }
+    </style>
+</head>
+<body>
+    <div id='container'>
+        <table>
+            <tr>
+                <td class="left"><label for="name">姓名</label></td>
+                <td class="right"><input type="text" id="name" placeholder="请输入姓名（2-5个汉字）"value="" /></td>
+            </tr>
+            <tr>
+                <td class="left"><label for="passWord">密码</label></td>
+                <td class="right"><input type="text" name="passWord" placeholder="请输入密码（8-10位)" value="" /></td>
+            </tr>
+            <tr id="item3">
+                <td><button id="button1">登陆</button></td>
+            </tr>
+        </table>
+        <script>
+            var hanZi=/(^[\u4E00-\u9FA5]{2,5}){1}$/ig
+            var shuZi=/[0-9]{8,10}/ig
+            var a="你好"
+            var b=a.match(hanZi)
+            console.log(b)
+                var submit=document.getElementById('button1')
+                submit.onclick=function(){
+                var name=document.getElementById("name")
+                var flag=name.value.match(hanZi)
+                console.log(flag)
+                if(flag==null){
+                   console.log("输入有误")
+                }
+                }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+    *{
+        margin:0 0;
+        padding:0 0;
+    }
+    #container{
+        border:1px solid black;
+        overflow: hidden;
+        width:400px;
+        margin:20px auto;
+    }
+    #first > li{
+        float:left;
+        list-style:none;
+    }
+    #first > #prev{
+        float: left;
+    }
+    #first > #next{
+        float:right;
+    }
+    #first > #year{
+        position:relative;
+        left:125px;
+    }
+    p{
+        text-align: center;
+    }
+    #week{
+        clear: both;
+        height:25px;
+        background-color:lightblue;
+    }
+    #week > li{
+        list-style: none;
+        float:left;
+        padding:0 20px 0 20px;
+    }
+    #day > li{
+        list-style: none;
+        text-align:center;
+        float:left;
+        display:block;
+        width:55px;
+        height:25px;
+        padding-left:0.9px;
+    }
+    #today{
+        color:red;
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul id="first">
+            <li id="prev">上一月</li>
+            <li id="year">2019年</li>
+            <li id="next">下一月</li>
+        </ul></br>
+        <p id="month">3月</p>
+        <ul id="week">
+            <li>日</li>
+            <li>一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+            <li>六</li>
+        </ul>
+        <ul id="day"></ul>
+    </div>
+    <script text="text/javascript">
+    var date=new Date()
+    var cyear=date.getFullYear()
+    var cmonth=date.getMonth()
+    add();
+    function add(){
+        let weekDay=new Date(cyear,cmonth,1).getDay()
+        let lastDay=new Date(cyear,cmonth+1,-1).getDate()+1
+        let today=new Date().getDate()
+        document.getElementById("year").innerHTML=cyear+'年'
+        document.getElementById("month").innerHTML=(cmonth+1)+"月"
+        var html=""
+        for(var a=0;a<weekDay;a++){
+            html+='<li>'+'</li>'
+        }
+        for(var i=1;i<lastDay+1;i++){
+            if(i==today&&(cmonth==new Date().getMonth())){
+                html+='<li id="today">'+i+'</li>'
+                }
+            else{
+                html+="<li>"+i+"</li>"}
+        }
+        document.getElementById("day").innerHTML=html
+    }
+    document.getElementById("prev").onclick=function(){
+        cmonth=cmonth-1
+        add()
+    }
+    document.getElementById("next").onclick=function(){
+        cmonth=cmonth+1
+        add()
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #head{
+            display:flex;
+            flex-direction: row;
+        }
+        span{
+            flex:1;
+            background-color: khaki;
+            border:2px solid white;
+            text-align: center;
+        }
+        .show{
+            display: block;
+            background-color: lightcoral;
+        }
+        div{
+            text-align:center;
+            background-color: lightblue;
+            display:none;
+        }
+        #e{
+            background-color: li;
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+        <span id='e'>第一</span>
+        <span>第二</span>
+        <span>第三</span>
+    </div>
+    <div id='a'  class='show'>
+        <p>sagfhhljk
+            safdafsdfs
+            sdfasdfasdf
+        </p>
+    </div>
+    <div id='b'>
+        <p>22222222
+        </p>
+    </div>
+    <div id='c'>
+        <p>33333333
+        </p>
+    </div>
+    <script>
+        window.onload=function(){
+            var head=document.getElementsByTagName('span')
+            var text=document.getElementsByTagName('div')
+            for(let i=0;i<head.length;i++){
+                head[i].onmouseover=function(){
+                    timer=setTimeout(function(){active(i)},300)
+                }
+                head[i].onmouseout=function(){
+                    clearTimeout(timer)
+                }
+            }
+            function active(index){
+                for(let i=0;i<head.length;i++){
+                    if(i==index){
+                        head[i].style.backgroundColor="lightblue"
+                        text[index+1].className="show"
+                    }
+                    else{
+                        head[i].style.backgroundColor="khaki"
+                        text[i+1].className=""
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

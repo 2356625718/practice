@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+        }
+
+        div {
+            width: 500px;
+            height: 80vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        form{
+            width:500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        label{
+            display:inline-block;
+	        width:100px;
+            font-weight: bolder;
+        }
+        label,input{
+            margin-top:15px;
+        }
+        input{
+            border:1px solid gray;
+        }
+        .alert{
+	        margin-left:5px;
+            color:red;
+            font-size:15px;
+        }
+        #fileAlert{
+            margin-left:5px;
+            font-size:12px;
+        }
+        input[type='checkbox']{
+            margin-left:5px;
+        }
+        textarea{
+            border-color: gray;
+            position:relative;
+            top:20px;
+        }
+        .end{
+            position:relative;
+            left:100px;
+            top:40px;
+            width:55px;
+            height:35px;
+            color:white;
+            background-color: gray;
+            margin-left:10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <form action='' method=''>
+            <label>用户名:</label>
+            <input type="text" placeholder='请输入用户名' id='username' name='username' value='' required><span class='alert'></span><br />
+            <label>真实姓名:</label>
+            <input type="text" id='trueName' name='trueName' value=''><br />
+            <label>性别:</label>
+            男：</span><input type="radio" name='sex' value='man' checked>&nbsp&nbsp
+            女：<input type="radio" name='sex' value='girl'>
+            <br />
+            <label>密码:</label>
+            <input type="password" id='password' name='password' value='' required><span class='alert'></span><br />
+            <label>确认密码:</label>
+            <input type="password" id='isPassword' name='isPassword' value='' required><span class='alert'></span><br />
+            <label>电话号码:</label>
+            <input type="text" name='phone' value=''><br />
+            <label>邮箱地址:</label>
+            <input type="text" id='email' name='email' value='' required><span class='alert'></span><br />
+            <label>头像上传:</label>
+            <button>选择文件</button><span id='fileAlert'>未选择任何文件</span><br />
+            <label>爱好:</label>
+            读书<input type="checkbox" name='like'>
+            写代码<input type="checkbox" name='like' checked>
+            篮球<input type="checkbox" name='like'>
+            足球<input type="checkbox" name='like'>
+            <br />
+            <label>个人签名:</label>
+            <textarea>有点懒。。。。</textarea><br/>
+            <button class='end' id='register'>注册</button>
+            <button class='end'>取消</button>
+        </form>
+    </div>
+    <script>
+        window.onload = ()=>{
+            var name = document.getElementById('username')
+            var password = document.getElementById('password')
+            var isPassword = document.getElementById('isPassword')
+            var email = document.getElementById('email')
+            var alert = document.getElementsByClassName('alert')
+            var btn = document.getElementById('register')
+            var nameValue = /(^[a-zA-Z_0-9]{4,16}){1}$/ig
+            var passwordValue = /^[\s\S]{4,16}$/ig
+            var emailValue = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/ig
+            btn.onclick = (e) =>{
+                var event = e||window.event
+                event.preventDefault()
+                value1 = name.value.match(nameValue)
+                value2 = password.value.match(passwordValue)
+                value3 = isPassword.value
+                value4 = email.value.match(emailValue)
+                judge(value1,value2,value3,value4)
+            }
+            judge = (a,b,c,d) =>{
+                var flag = 1
+                if(value1 == null) {alert[0].innerText = '用户名格式有误';flag-=1}
+                if(value2 == null) {alert[1].innerText = '密码格式有误';flag-=1}
+                if(value2 != value3) {alert[2].innerText = '两次输入的密码不一致';flag-=1}
+                if(value4 == null) {alert[3].innerText = '邮箱地址格式有误';flag-=1}
+                if(name.value == '') {alert[0].innerText = '用户名不能为空' ;flag-=1}
+                if(password.value == '') {alert[1].innerText = '密码不能为空';flag-=1}
+                if(isPassword.value == '') {alert[2].innerText = '确认密码不能为空';flag-=1}
+                if(email.value == '') {alert[3].innerText = '邮箱地址不能为空';flag-=1}
+                if(flag != 1) window.alert('注册失败')
+                else {
+                    window.alert('注册成功')
+                    alert[0].innerText = ''
+                    alert[1].innerText = ''
+                    alert[2].innerText = ''
+                    alert[3].innerText = ''
+            }
+
+        }
+    }
+    </script>
+</body>
+
+</html>

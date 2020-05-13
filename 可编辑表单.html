@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width:100%;
+        }
+        table,th,td{
+            border:1px solid black;
+            border-collapse:collapse;
+        }
+        table{
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th width="100px;">姓名</th>
+            <th>学号</th>
+        </tr>
+        <tr>
+            <td>周雨</td>
+            <td>201800359</td>
+        </tr>
+    </table>
+    <script>
+        window.onload=function(){
+            var tds=document.getElementsByTagName('td')
+            for(var i=0;i<tds.length;i++) {
+                tds[i].onclick=function(){
+                    for(let i=0;i<this.childNodes.length;i++){
+                        if(this.childNodes[i].nodeName=="INPUT")
+                        return false;
+                    }
+                    var text=document.createElement('input')
+                    var preText=this.innerText
+                    console.log(preText)
+                    this.innerHTML=""
+                    var input=document.createElement('input')
+                    input.type="text"
+                    input.value=preText
+                    input.style.cssText="width:100px;border:0px;"
+                    this.appendChild(input)
+                    input.focus()
+                    input.select()
+                    var biao=this
+                    input.onkeydown=function(e){
+                      var event=e||window.event
+                      if(event.keyCode==13){
+                          biao.value=biao.value
+                      }
+                      else if(event.keyCode==27){
+                          biao.innerHTML=preText
+                      }
+
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

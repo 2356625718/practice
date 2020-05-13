@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            width:800px;
+            height:550px;
+            background-color:#ccc;
+            position:absolute;
+            left:500px;
+            top:100px;
+        }
+    </style>
+</head>
+<body>
+    <div id='container'></div>
+    <button id="btn">出现弹球</button>
+    <script>
+        window.onload=function () {
+        var color="lightblue|#ccc|blue|red|yellow|white|black"
+        color=color.split('|')
+        console.log(color)
+        document.getElementById('btn').onclick=function(){
+            var qiu=document.createElement('div')
+            var rongqi=documment.getElementById('#container')                                                                                           
+            rongqi.appendChild(qiu)
+            qiu.style.cssText="position:absolute;border:1px;background-color:red;border-radius:50%;width:50px;height:50px;"
+            var top=rongqi.offsetHeight/2-qiu.offsetHeight/2
+            var left=rongqi.clientWidth/2-qiu.offsetWidth/2   
+            qiu.style.top=top+'px'    
+            qiu.style.left=left+'px'    
+            var x=Math.floor(Math.random()*10)
+            var y=Math.floor(Math.random()*10)
+            qiu.style.backgroundColor=color[Math.floor(Math.random()*color.length)]
+            setInterval(function(){
+                if((top>(rongqi.clientHeight-qiu.offsetHeight))||(top<=0)) y=-y
+                if((left>(rongqi.clientWidth-qiu.offsetWidth))||(left<=0)) x=-x
+                top+=y
+                left+=x
+                qiu.style.top=top+'px'
+                qiu.style.left=left+'px'
+            },30)
+        }
+        }
+    </script>
+</body>
+</html>

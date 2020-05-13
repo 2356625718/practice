@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='jquery.js'></script>
+    <style>
+        *{
+            margin:0 0;
+            padding:0 0;
+        }
+        div>ul{
+            display:flex;
+            list-style:none;
+            text-align:center;
+            justify-content:center;
+        }
+        div>ul>li>ul{
+            list-style:none;
+            background:lightgrey;
+        }
+        li{
+            list-style:none;
+        }
+        .one{
+            width:60px;
+            height:40px;
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <ul>
+            <li class='one'>
+                <a href="">第一级</a>
+                <ul class="two">
+                    <li>第二级</li>
+                    <li>第二级</li>
+                    <li>第二级</li>
+                </ul>
+            </li>
+            <li class='one'>
+                <a href="">第一级</a>
+                <ul class="two">
+                    <li>第二级</li>
+                    <li>第二级</li>
+                    <li>第二级</li>
+                </ul>
+            </li>
+            <li class='one'>
+                <a href="">第一级</a>
+                <ul class="two">
+                    <li>第二级</li>
+                    <li>第二级</li>
+                    <li>第二级</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        $(function(){
+            $(".two").hide()
+            $('.one').mouseenter(function(){
+               $(this).children('ul').stop(true,false).slideDown()
+            })
+            $('.one').mouseleave(function(){
+                $(this).children('ul').stop(true,false).slideUp()
+            })
+        })
+    </script>
+</body>
+</html>   

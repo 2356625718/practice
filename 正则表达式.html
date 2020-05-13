@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var text=`
+        http://www.baidu.com
+        http://3g.baidu.cn
+        ftp://www.baidu.com
+        www.baidu.com
+        http://www.baidu.com#username&code=1231432
+        http://www.baidu.com.cn-?cookie
+        `
+        exp=/([\w]+:\/\/)?[\w]+\.[\w]+\.[\w\#\-\?\.\&\=]+/ig
+        console.log(text.match(exp))
+    </script>
+</body>
+</html>

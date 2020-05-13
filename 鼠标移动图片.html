@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        #img{
+            position:absolute;
+            width:80px;
+            height:70px;
+        }
+        body{
+            width:100%;
+            height:100%;
+        }
+    </style>
+</head>
+<body>
+    <img src="练习.png" id="img" />
+    <script>
+        var image=document.getElementById("img")
+        window.onmousemove=function(e){
+            var event=e||window.event
+            var x=event.clientX
+            var y=event.clientY  
+            console.log(window.innerHeight)          
+            if(x<=5||x>=(1536-image.offsetWidth)) x=-300
+            if(y<=5||y>=(754-image.offsetHeight)) x=-300
+            image.style.top=y+"px"
+            image.style.left=x+"px"
+        }
+    </script>
+</body>
+</html>

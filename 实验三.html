@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='./jquery.js'></script>
+    <script src='./distpicker.data.min.js'></script>
+    <script src='./distpicker.min.js'></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 100%;
+            height: 100vh;
+        }
+
+        #nav {
+            width: 100%;
+            height: 130px;
+            background-color: lightgreen;
+            display: flex;
+            flex-direction: column;
+            align-content: space-between;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            left: 75px;
+            margin: 15px;
+        }
+
+        .nav>li {
+            width: 200px;
+            height: 30px;
+            list-style: none;
+        }
+
+        .nav>li:nth-child(even)>a {
+            color: rgb(3, 109, 3);
+        }
+
+        .nav>li>a:link {
+            text-decoration: none;
+            color: black;
+        }
+
+        .nav>li>a:hover {
+            text-decoration: underline;
+            color: blue;
+        }
+
+        .nav>li>a:active {
+            text-decoration: underline;
+            color: red;
+        }
+
+        #mask {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background-color: lightslategray;
+            opacity: 0.5;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+        }
+
+        #btn1 {
+            position: absolute;
+            left: 1300px;
+            top: 40px;
+            width: 80px;
+            height: 30px;
+        }
+
+        #register {
+            display: none;
+            width: 470px;
+            height: 500px;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            margin-left: -210px;
+            margin-top: -175px;
+            background: white;
+        }
+
+        #add {
+            width: 470px;
+            height: 20%;
+            text-align: right;
+            font-size: 1.5em;
+            letter-spacing: 0.9em;
+            position: relative;
+            left: 35px;
+            top: 8px;
+        }
+
+        #out {
+            width: 70px;
+            font-size: 1.5em;
+            position: relative;
+            left: 100px;
+            top: 8px;
+        }
+
+        .left {
+            position: relative;
+            left: 70px;
+            top: 40px;
+        }
+
+        .right {
+            position: relative;
+            right: 180px;
+            top: 40px;
+        }
+
+        span:first {
+            position: relative;
+            top: -10px;
+        }
+
+        input:checked+span {
+            color: red;
+        }
+
+        textarea:focus {
+            background-color: yellow;
+        }
+
+        textarea::selection {
+            color: white;
+            background-color: blue;
+        }
+
+        td>button {
+            color: gray;
+            position: relative;
+            left: 80px;
+            top: 10px;
+            margin: 10px;
+        }
+
+        hr {
+            position: relative;
+            top: -320px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul class='nav'>
+                <li><a href="#">搜狗</a></li>
+                <li><a href="#">输入法</a></li>
+                <li><a href="#">浏览器</a></li>
+                <li><a href="#">界面</a></li>
+                <li><a href="#">吃饭</a></li>
+            </ul>
+            <ul class='nav'>
+                <li><a href="#">睡觉</a></li>
+                <li><a href="#">打游戏</a></li>
+                <li><a href="#">吃豆豆</a></li>
+                <li><a href="#">再吃饭</a></li>
+                <li><a href="#">再睡觉</a></li>
+            </ul>
+            <div id="btn1box"><button id="btn1">注册</button></div>
+        </div>
+        <div id="mask"></div>
+        <div id="register">
+            <table>
+                <tr id="head">
+                    <td id="add">用户注册界面</td>
+                    <td id="out">X</td>
+                </tr>
+                <tr id="main">
+                    <td class="left"><label for='name'>姓名:</label></td>
+                    <td class="right"><input type="text" id="name" placeholder="请输入姓名（2-5个汉字）" value="" /></td>
+                </tr>
+                <tr>
+                    <td class="left"><label for="passWord">密码:</label></td>
+                    <td class="right"><input type="text" name="passWord" id='passWord' placeholder="请输入密码（8-10位)"
+                            value="" /></td>
+                </tr>
+                <tr>
+                    <form>
+                        <td class='left'>
+                            <span>学历:</span>
+                        </td>
+                        <td class='right'>
+                            <label class='check'><input name="xueli" type="radio" value="" /><span>初中及以下</span></label>
+                            <label class='check'><input name="xueli" type="radio" value="" /><span>高中</span></label>
+                            </br>
+                            <label class='check'><input name="xueli" type="radio" value="" /><span>大学及以上</span></label>
+                        </td>
+                    </form>
+                </tr>
+                <tr>
+                    <td class='left'>籍贯:</td>
+                    <td class='right'>
+                        <div id="distpicker3">
+                            <select></select>
+                            <select></select>
+                            <select></select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <form>
+                        <td class='left'>
+                            <span>爱好:</span>
+                        </td>
+                        <td class='right'>
+                            <label class='check'><input name="aihao" type="checkbox" value="" /><span>阅读</span></label>
+                            <label class='check'><input name="aihao" type="checkbox" value="" /><span>艺术</span> </label>
+                            <label class='check'><input name="aihao" type="checkbox" value="" /><span>音乐</span></label>
+                            <label class='check'><input name="aihao" type="checkbox" value="" /><span>体育</span></label>
+                        </td>
+                    </form>
+                </tr>
+                <tr>
+                    <td class='left'>其它:</td>
+                    <td class='right'><textarea rows='6' cols='20'></textarea></td>
+                </tr>
+                <tr>
+                    <td class='left'><button id='btn2'>保存</button>
+                        <button id='btn3'>复位</button>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#distpicker3").distpicker({
+                province: "四川省",
+                city: "德阳市",
+                district: "旌阳区"
+            })
+            $('#btn1').click(function () {
+                $('#mask').css('display', 'block')
+                $('#register').css('display', 'block')
+            })
+            $('#out').css('cursor', 'default').click(function () {
+                $('#mask').css('display', 'none')
+                $('#register').css('display', 'none')
+            })
+            $('#btn2').click(function () {
+                var hanZi = /(^[\u4E00-\u9FA5]{2,5}){1}$/ig
+                var shuZi = /^[0-9]{8,10}$/ig
+                var name = document.getElementById("name")
+                var passWord = document.getElementById('passWord')
+                var flag1 = name.value.match(hanZi)
+                var flag2 = passWord.value.match(shuZi)
+                if (flag1 == null) {
+                    window.alert('名称输入有误')
+                    $('#name').val('')
+                } else if (flag2 == null) {
+                    window.alert('密码输入有误')
+                    $('#passWord').val('')
+                } else {
+                    window.alert('注册成功')
+                    $('#name').val('')
+                    $('#passWord').val('')
+                    $('#mask').css('display', 'none')
+                    $('#register').css('display', 'none')
+                    $("input[name='xueli'").each(function () {
+                        $(this).prop('checked', '')
+                    })
+                    $("input[name='aihao']").each(function () {
+                        $(this).prop('checked', '')
+                        $('textarea').val('')
+                    })
+                }
+            })
+            $('#btn3').click(function () {
+                $('#name').val('')
+                $('#passWord').val('')
+                $("input[name='xueli']").each(function () {
+                    $(this).prop('checked', '')
+                })
+                $("input[name='aihao']").each(function () {
+                    $(this).prop('checked', '')
+                })
+                $('textarea').val('')
+            })
+        })
+    </script>
+</body>
+
+</html>

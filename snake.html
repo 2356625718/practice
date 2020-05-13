@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        canvas{
+            box-shadow:0 0 20px gray;
+            margin-left: 130px;
+        }
+        button,select{
+            position: relative;;
+            top:35px;
+            right:660px;
+            transform:translateX(-50%);
+            align-self: flex-end;
+        }
+        select{
+            widows: 50px;
+            height:25px;
+            transform:translate(5px,-1px);
+        }
+        h3{
+            margin:0 0;
+            align-self: center;
+            position: absolute;
+            top:715px;
+            left:900px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas width='1200' height='700'></canvas>
+        <button>开始贪吃蛇</button>
+        <select>
+            <option value='400'>简单</option>
+            <option value='250' selected>中等</option>
+            <option value='40'>较难</option>
+        </select>
+        <h3>得分:&nbsp;<span>0</span></h3>
+    </div>
+    <script>
+        window.onload =  () =>{
+            var btn1 = document.querySelector('button')
+            var canvas1 = document.querySelector('canvas')
+            var ctx = canvas1.getContext('2d')
+            var select = document.querySelector('select')
+            var score = document.querySelector('span')
+            var speed = select.value
+            var isEatFood = false
+            var count = 0
+            var timer
+            var img = new Image()
+            img.src = './b.jpg'
+            
+
+            //矩形对象
+            function Rect (x,y,width,height,color) {
+                this.x = x
+                this.y = y
+                this.width = width
+                this.height = height
+                this.color = color
+            }
+
+            //添加矩形对象的原型方法--绘制
+            Rect.prototype.draw = function () {
+                ctx.beginPath()
+                ctx.fillStyle = this.color
+                ctx.fillRect(this.x,this.y,this.width,this.height)
+                ctx.strokeRect(this.x,this.y,this.width,this.height)
+            }
+
+            //创建snake对象
+            function Snake () {
+                //画蛇头
+                this.head = new Rect(canvas1.width/2-25,canvas1.height/2-25,25,25,'red')
+                //画蛇身
+                this.body = new Array()
+                var x = this.head.x-25
+                var y = this.head.y
+                for (var i=0;i<3;i++) {
+                    var rect = new Rect(x,y,25,25,'gray')
+                    this.body.push(rect)
+                    x-=25
+                }
+                this.direction = 2;
+            }
+
+            //添加snake对象的原型方法--绘制
+            Snake.prototype.draw = function () {
+                //绘制蛇头
+                this.head.draw()
+                //绘制蛇身
+                for (var i=0;i<this.body.length;i++){
+                    this.body[i].draw()
+                }
+            }
+
+            //添加snake对象的原型方法--移动
+            Snake.prototype.move = function (snake,timer) {
+                //加头
+                var rect = new Rect(this.head.x,this.head.y,this.head.width,this.head.height,'gray')
+                this.body.unshift(rect)
+                //去尾              
+                if (isEatFood === false) {
+                    this.body.pop()
+                }else{
+                    isEatFood = false
+                }
+
+                //控制移动
+                switch (this.direction) {
+                    case 0:{
+                        this.head.x -= this.head.width
+                        break
+                    }
+                    case 1:{
+                        this.head.y -= this.head.height
+                        break
+                    }
+                    case 2:{
+                        this.head.x += this.head.width
+                        break
+                    }
+                    case 3:{
+                        this.head.y += this.head.height
+                        break
+                    }
+                }
+
+                document.onkeydown = function (e) {
+                    var e = event||window.event
+                    switch (e.keyCode) {
+                        case 37:{
+                            snake.direction = 0;
+                            break;
+                        }
+                        case 38:{
+                            snake.direction = 1;
+                            break;
+                        }
+                        case 39:{
+                            snake.direction = 2;
+                            break;
+                        }
+                        case 40:{
+                            snake.direction = 3;
+                            break;
+                        }
+                    }
+                }
+
+                //可能我撞了南墙
+                if (snake.head.x<0||(snake.head.x+25)>canvas1.width||snake.head.y<0||(snake.head.y+25)>canvas1.height) {
+                    clearInterval(timer)
+                    time = null
+                    window.alert('菜鸡~Game Over!~~得分： '+count)
+                    window.location.reload(true)
+                }
+                
+                //判断蛇头和蛇身是否重叠
+                for (var i=0;i<this.body.length;i++) {
+                    if (isRectHit(snake.head,this.body[i])) {
+                        clearInterval(timer)
+                        time = null
+                        window.alert('菜鸡~Game Over!~~得分： '+count)
+                        window.location.reload(true)
+                    }
+                }
+            }
+
+            //随机食物
+            function foodRandom (snake) {
+                var isInSnake = true
+                while (isInSnake) {
+                    var x = getRandom(0,(canvas1.width-25)/25)*25
+                    var y = getRandom(0,(canvas1.height-25)/25)*25
+                    var rect = new Rect(x,y,25,25,'lightblue')
+
+                    //食物是否与蛇头重叠
+                    if (isRectHit(rect,snake.head)) {
+                        isInSnake = true
+                        continue
+                    }
+                    isInSnake = false
+                    //食物是否与蛇身重叠
+                    for (var i=0;i<snake.body.length;i++) {
+                        if (isRectHit(rect,snake.body[i])) {
+                            isInsnake = true
+                            break
+                        }
+                    }
+                }
+                return rect
+            }
+
+            //碰撞检测
+            function isRectHit (rect1,rect2) {
+                let minx1 = rect1.x
+                let minx2 = rect2.x
+                let miny1 = rect1.y
+                let miny2 = rect2.y
+                let maxx1 = rect1.x+rect1.width
+                let maxx2 = rect2.x+rect2.width
+                let maxy1 = rect1.y+rect1.height
+                let maxy2 = rect2.y+rect2.height
+                let minx = Math.max(minx1,minx2)
+                let miny = Math.max(miny1,miny2)
+                let maxx = Math.min(maxx1,maxx2)
+                let maxy = Math.min(maxy1,maxy2)
+                if (minx<maxx && miny<maxy) {
+                    return true
+                }else{
+                    return false
+                }
+            }
+
+            //获取随机数
+            function getRandom (min,max) {
+                return Math.round(Math.random()*(max-min))
+            }
+
+            var snake = new Snake()
+            var food = foodRandom(snake)
+
+            //关键帧动画
+            function animation (snake,timer) {
+                ctx.clearRect(0,0,canvas1.width,canvas1.height)
+                snake.move(snake,timer)
+                snake.draw()
+                ctx.drawImage(img,snake.head.x,snake.head.y,25,25)
+                console.log(food)
+                food.draw()
+                if (isRectHit(food,snake.head)) {
+                    isEatFood = true
+                    food = foodRandom(snake)
+                    count++
+                    score.innerText = count
+                }
+            }
+
+            select.onchange = () =>{
+                speed = Number(select.value)
+                console.log(speed)
+            }
+
+            //点击开始游戏
+            btn1.onclick = function () {
+                btn1.disabled = true
+                snake.draw()
+                timer = setInterval( () =>{animation(snake,timer)},speed)
+            }
+        }
+    </script>
+</body>
+</html>

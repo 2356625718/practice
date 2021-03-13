@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div style="height:2000px">
+
+  </div>
+  <script>
+    let throttle = (func, time) => {
+      let timeout
+      let start = new Date()
+      return function () {
+        let now = new Date()
+        clearTimeout(timeout)
+        if (now - start >= time) {
+          func.apply()
+          start = now
+        } else {
+          timeout = setTimeout(func, time)
+        }
+      }
+    }
+
+    let say = () => {
+      console.log(scrollY)
+    }
+    onload = () => {
+      addEventListener("scroll", throttle(say, 1000))
+    }
+  </script>
+</body>
+</html>

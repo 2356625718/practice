@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    
+    function setCookie(key,value,day){
+      var date = new Date()
+      console.log(date)
+      date.setDate(date.getDate() + day)
+      console.log(date)
+      document.cookie
+       = key+'='+value+';expires='+date+';'
+    }
+    setCookie('color2','yellow',20);
+    console.log(document.cookie)
+    var cookieArr = document.cookie.split(';')
+    console.log(cookieArr)
+    var cookieData = new Map()
+    for(var i=0;i<cookieArr.length;i++){
+      let temp = cookieArr[i].split('=')
+      cookieData.set(temp[0],temp[1])
+    }
+    console.log(cookieData)
+    for (var key in cookieData){
+      console.log(cookieData[key])
+    }
+    console.log(cookieData.get(' color'))
+    document.body.style.backgroundColor = cookieData.get(' color')
+  </script>
+</body>
+</html>

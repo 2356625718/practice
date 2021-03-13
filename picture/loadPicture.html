@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="box">loading</div>
+  <script>
+    let product = (id) => {
+      let img = new Image()
+    img.src = "./header.png"
+    img.onload = (e) => {
+      document.getElementById('box').innerHTML = "<div>'"+id+"'<img src='" + e.target.src + "'></img></div>"
+    } 
+    }
+    product(1)
+    product(2)
+  </script>
+</body>
+</html>

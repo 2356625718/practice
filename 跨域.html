@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('get','http://127.0.0.1:4000/test',true);
+    // xhr.send(null);
+    // xhr.onreadystatechange = function(){
+    //   if(xhr.readyState == 4 && xhr.status == 200){
+    //     console.log(xhr.responseText)
+    //   }
+    // }
+    function callback(data){
+      console.log(data)
+    };
+    var script = document.createElement('script');
+    script.src = "http://127.0.0.1:4000/test?"+"callback";
+    var head = document.getElementsByTagName('head')[0]
+    head.append(script)
+  </script>
+</body>
+</html>

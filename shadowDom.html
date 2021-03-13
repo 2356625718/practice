@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="container">
+    <input type="range"/>
+    <show-hello name="周雨"><span slot="a">sdfs</span></show-hello>
+    <div id="1"></div>
+    <button id="2">点击</button>
+    <template id='3'>
+      <div>hello world</div>
+    </template>
+  </div>
+  <script>
+    customElements.define('show-hello', class extends HTMLElement {
+      connectedCallback () {
+        const shadow = this.attachShadow({ mode: 'open' })
+        shadow.innerHTML = `<p>hello,<slot name="a">hehe</slot>${this.getAttribute('name')}</p>`
+      }
+      static get observedAttributes() {
+        return ['name']
+      }
+      attributeChangedCallback(name, oldValue, newValue) {
+        console.log(name,oldValue)
+        console.log(name,newValue)
+      }
+    })
+
+    let ele = document.getElementsByName('周雨')[0]
+    let first = document.getElementById('1')
+    let second = document.getElementById('2')
+    let third = document.getElementById('3')
+    second.onclick = () => {
+      first.attachShadow({mode:'open'})
+      first.shadowRoot.append(third.content.cloneNode(true))
+    }
+  </script>
+</body>
+</html>

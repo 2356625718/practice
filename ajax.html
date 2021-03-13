@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="ajax.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <form>
+      <label>姓名</label>
+      <input type="text" value="" name="name"/></br>
+      <label>密码</label>
+      <input type="number" value="" name="pwd"/>
+      <button id="submit">提交</button>
+    </form>
+  </div>
+  <script>
+    ajax(
+      {
+        url:"http://127.0.0.1:4000/test"
+      }
+    )
+    // window.onload = function(){
+    //   var nameIn = document.getElementsByName('name')[0];
+    //   var pwdIn = document.getElementsByName('pwd')[0];
+    //   var btn = document.getElementById('submit');
+    //   btn.onclick = function(e){
+    //     e.preventDefault()
+    //     var name = nameIn.value;
+    //     var pwd = pwdIn.value;
+    //     var xhr = new XMLHttpRequest();
+    //     var params = "?name="+name
+    //     xhr.open('get',"https://api.apiopen.top/searchAuthors"+params,true);
+    //     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+    //     xhr.send(null);
+    //     xhr.onreadystatechange = function(){
+    //       if(xhr.readyState == 4 && xhr.status == 200){
+    //         console.log(JSON.parse(xhr.responseText))
+    //       }
+    //     }
+    //   }
+    // }
+  </script>
+</body>
+</html>

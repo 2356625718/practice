@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  #headBox {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #left {
+    width: 80%;
+  }
+
+  #name{
+    color:white;
+    font-weight: bold;
+    font-size:1.6rem;
+    margin-left:15%;
+  }
+  button {
+    width: 4rem;
+    height: 2rem;
+  }
+
+  #btn1 {
+    background-color: rgb(110, 233, 192);
+    border-radius: 5%;
+    margin-right: 1rem;
+  }
+
+  #btn1:hover {
+    background-color: rgb(4, 238, 160);
+  }
+
+  #btn2 {
+    background-color: rgb(156, 206, 247);
+    border-radius: 5%;
+    margin-right: 1rem;
+  }
+
+  #btn2:hover {
+    background-color: rgb(120, 184, 245);
+  }
+</style>
+
+<body>
+  <div id="headBox">
+    <div id="left">
+      <span id="name">简陋论坛</span>
+    </div>
+    <button id="btn1">发表帖子</button>
+    <button id="btn2">查看收藏</button>
+  </div>
+  <script type="module">
+    const btn1 = document.getElementById('btn1')
+
+    btn1.onclick = () => {
+      parent.port2.postMessage({type:'INTO_EDITOR'})
+    }
+  </script>
+</body>
+</html>

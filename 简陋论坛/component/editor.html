@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/mditor@1.0.5/dist/css/mditor.min.css" />
+  <script src="https://unpkg.com/mditor@1.0.5/dist/js/mditor.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: none;
+      box-sizing: border-box;
+    }
+  
+    #editorBox{
+      height:1000px;
+    }
+  
+    #title{
+      width:fit-content;
+      color:cornflowerblue;
+      font-size:1.8rem;
+      margin: 0 auto;
+      margin-top: 1rem;
+      padding-bottom:0.5rem;
+      cursor: default;
+    }
+  
+    #back{
+      position: absolute;
+      font-weight: bold;
+      color:rgb(102, 102, 228);
+      left:2rem;
+      cursor:pointer;
+    }
+  
+    .line{
+      margin:0.5rem 0;
+      width:100%;
+      border-bottom: 0.7rem solid cornflowerblue;
+    }
+
+    #editor{
+      height:100%;
+      width:100%;
+    }
+
+    .viewer{
+      position:relative !important;
+      bottom:1rem !important;
+    }
+
+    #goodBox{
+      margin-top:1.5rem;
+      width:80%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-left:4.5rem;
+    }
+
+    #good {
+      width: 6rem;
+      height: 2rem;
+      font-size:1rem;
+      color:white;
+      background-color: rgb(156, 206, 247);
+      border-radius: 5%;
+    }
+
+    #good:hover {
+      background-color: rgb(120, 184, 245);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="editorBox">
+    <div id="title"><span id="back"><</span><span id="titleText">编辑帖子</span></div>
+    <div class="line"></div>
+    <div>
+      <textarea name="editor" id="editor"></textarea>
+    </div>
+    <div id="goodBox"><button id='good'>确认发布</button> </div>
+  </div>
+  <script type="module">
+     //返回列表页
+      const back = document.getElementById('back')
+      back.addEventListener('click', () => {
+        parent.port2.postMessage({type:'BACK'})
+      })
+
+      
+      var mditor =  Mditor.fromTextarea(document.getElementById('editor'));
+      let value
+      const texta = document.getElementsByClassName('editor')[0]
+      const submit = document.getElementById('good')
+      texta.onblur = (e) => {
+        value = e.target.value
+      }
+
+      submit.onclick = () => {
+        parent.port2.postMessage({type:"ADD_DATA",data:{
+        id:2,
+        author:'游客',
+        imgUrl:'../IMG_7898.PNG',
+        title:'不支持自定义',
+        introduce:'不支持自定义',
+        content:value,
+        good:0,
+        commentNumber:0,
+        reply:[]
+      }})
+      parent.port2.postMessage({type:'BACK'})
+      }
+
+  </script>
+</body>
+</html>

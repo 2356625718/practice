@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var wsc = {
+      name: "王思聪",
+      age: 18
+    }
+    var wjl = {
+      name: "王健林",
+      age: 45,
+      money: 1000,
+      go: function () {
+        console.log("success")
+      }
+    }
+
+    function extend(parent, child) {
+      for (var key in parent) {
+        if (child[key]) {
+          continue
+        } else {
+          child[key] = parent[key]
+        }
+      }
+    }
+
+    // function Person() {
+    //   this.have = '119'
+    //   this.age = 99
+    // }
+
+    // function Student(num, name, age) {
+    //   this.num = num
+    //   this.name = name
+    //   this.age = age
+    // }
+
+    // Student.prototype = new Person()
+    // Student.prototype.constructor = Student
+
+    // var wo = new Student(1, '周雨', 18)
+    // console.log(wo)
+    // console.log(wo.__proto__)
+    // console.log(wo.__proto__.have)
+
+    function Person(name, age) {
+      this.name = name
+      this.age = age
+      this.have = 119
+      this.sayHi = function () {
+        console.log("hello")
+      }
+    }
+
+    function Student(num, name, age) {
+      Person.call(this, name, age)
+      this.num = num
+    }
+
+    Student.prototype = new Person()
+    Student.prototype.constructor = Student
+
+    var wo = new Student(1, '周雨', 18)
+    console.log(wo)
+    console.log(wo.sayHi())
+  </script>
+</body>
+
+</html>

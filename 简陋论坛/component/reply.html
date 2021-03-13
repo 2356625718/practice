@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  #replyBox{
+    width:100%;
+    height:auto;
+  }
+  
+  .line{
+    margin:0.5rem 0;
+    width:100%;
+    border-bottom: 0.7rem solid cornflowerblue;
+  }
+
+  .title{
+    display: inline-block;
+    width:100%;
+    color:darkkhaki;
+    font-size:1.3rem;
+    text-align: center;
+  }
+
+  #tou{
+    width:3rem;
+    height:3rem;
+    border-radius: 50%;
+  }
+
+  #reply{
+    position: relative;
+  }
+
+  #replyInput{
+    display: inline-block;
+    margin:1rem 0;
+    padding:3px;
+    height:50px;
+    width:95%;
+    height: 5rem;
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    border-radius:4px;
+  }
+
+  #replyInput2{
+    display: inline-block;
+    margin:1rem 0;
+    padding:3px;
+    height:50px;
+    width:95%;
+    height: 5rem;
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    border-radius:4px;
+  }
+
+  #good {
+    width: 4rem;
+    height: 2rem;
+    font-size:1rem;
+    color:white;
+    background-color: rgb(156, 206, 247);
+    border-radius: 5%;
+  }
+
+  #good:hover {
+    background-color: rgb(120, 184, 245);
+  }
+
+  .replyBtn{
+    width: 2.5rem;
+    height: 1.5rem;
+    font-size:0.8rem;
+    color:white;
+    background-color: rgb(115, 241, 98);
+    border-radius: 5%;
+    margin:0.5rem;
+  }
+
+  .replyBtn:hover {
+    background-color: rgb(63, 226, 48);
+  }
+
+  .replyBtn2{
+    transform:translateX(5rem);
+    width: 2.5rem;
+    height: 1.5rem;
+    font-size:0.8rem;
+    color:white;
+    background-color: rgb(115, 241, 98);
+    border-radius: 5%;
+    margin:0.5rem;
+  }
+
+  .replyBtn2:hover {
+    background-color: rgb(63, 226, 48);
+  }
+
+  ul{
+    display: inline-block;
+    width:100%;
+    height:auto;
+  }
+
+  li{
+    display: inline-block;
+    width:100%;
+    height:auto;
+    padding:1rem;
+  }
+
+  .name2{
+    margin-left:5rem;
+  }
+
+  #reply2{
+    display: none;
+    width:40rem;
+    height:9rem;
+    position: absolute;
+    left:50%;
+    top:20%;
+    background-color: floralwhite;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+  }
+
+  #goodBox{
+    width:80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left:4.5rem;
+  }
+</style>
+
+<body>
+  <div id="replyBox">
+    <span class="title">回复栏</span>
+    <div id="reply">
+      <div>
+        <textarea type="text" id="replyInput" name="replyInput" value="" placeholder="请留言......"></textarea>
+      </div>
+      <div style="height:6.5rem"></div>
+      <div id="goodBox"><button id='good'>留言</button> </div>
+      <div>
+        <div class="title">回复列表</div>
+        <div class="line"></div>
+        <div style="height:5rem">
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+    <div id="reply2">
+      <div>
+        <textarea type="text" id="replyInput2" name="replyInput2" value="" placeholder="请留言......"></textarea>
+      </div>
+      <div style="margin-top:16%;display: flex;">
+        <button id="hide" class='replyBtn' style="display: inline-block !important;">取消</button>
+        <button id="confirmReply" class='replyBtn' style="display: inline-block !important;margin-left:85%;">留言</button> 
+      </div>
+    </div>
+  </div>
+  <script type="module">
+    const ulBox = document.getElementsByTagName('ul')[0]
+    const reply2 = document.getElementById('reply2')
+
+    let data = {}
+    let id
+
+    //生成评论列表
+    parent.port2.onmessage = message => {
+      data = message.data
+      let reply = data.reply
+      if (reply.length === 0) document.location.reload()
+      let replyList
+      if (reply !== undefined) {
+          replyList = reply.map((item,index) => {
+          let li = document.createElement('li')
+          let div = document.createElement('div')
+          let span = document.createElement('span')
+          span.className = 'name'
+          span.innerText = item.name + ':' + item.content
+          div.appendChild(span)
+          li.appendChild(div)
+          let btn = document.createElement('button')
+          btn.className = 'replyBtn'
+          btn.innerText = '回复'
+          li.setAttribute("id", index)
+          btn.onclick = (e) => {
+            reply2.style.display = 'block'
+            id = e.target.parentNode.id
+            reply2.style.marginTop = parent.window.parent.pageYOffset + 'px'
+          }
+          li.appendChild(btn)
+          let childrenList
+          if (item.children !== undefined && item.children.length !== 0) {
+            let ul = document.createElement('ul')
+            childrenList = item.children.map(rep => {
+              let li = document.createElement('li')
+              let div = document.createElement('div')
+              let span = document.createElement('span')
+              span.className = 'name2'
+              span.innerText = rep.name + ':' + rep.content
+              div.appendChild(span)
+              li.appendChild(div)
+              let btn = document.createElement('button')
+              btn.className = 'replyBtn2'
+              btn.innerText = '回复'
+              li.setAttribute("id", index)
+              btn.onclick = (e) => {              
+                reply2.style.display = 'block'
+                id = e.target.parentNode.id
+                reply2.style.marginTop = parent.window.parent.pageYOffset + 'px'
+              }
+              li.appendChild(btn)
+              return li
+            })
+            for (let ch of childrenList) {
+              ul.appendChild(ch)
+            }
+            li.appendChild(ul)
+          }
+          return li
+        })
+        for (let reply of replyList) {
+          ulBox.appendChild(reply)
+        }
+      }
+    }
+
+    //添加评论
+    const replyInput = document.getElementById('replyInput')
+    const replyBtn = document.getElementById('good')
+
+    let value
+
+    replyInput.onblur = e => {
+      value = e.target.value
+    }
+
+    replyBtn.onclick = () => {
+      if (data.reply === undefined) data.reply = []
+      data.reply.push({name:"游客", content:value})
+      let li = document.createElement('li')
+      let div = document.createElement('div')
+      let span = document.createElement('span')
+      span.className = 'name'
+      span.innerText = '游客:' + value
+      div.appendChild(span)
+      li.appendChild(div)
+      li.setAttribute("id", data.reply.length - 1)
+      console.log(li)
+      let btn = document.createElement('button')
+      btn.className = 'replyBtn'
+      btn.innerText = '回复'
+      btn.onclick = (e) => {
+        reply2.style.display = 'block'
+        id = e.target.parentNode.id
+        reply2.style.marginTop = parent.window.parent.pageYOffset + 'px'
+      }
+      li.appendChild(btn)
+      ulBox.appendChild(li)
+      replyInput.value = ''
+    }
+    
+    //生成二级回复
+    const hide = document.getElementById("hide")
+    const replyInput2 = document.getElementById("replyInput2")
+    const confirmReply = document.getElementById('confirmReply')
+    let value2
+
+    hide.onclick = () => {
+      reply2.style.display = 'none'
+      replyInput2.value = ''
+    }
+
+    replyInput2.onblur = (e) => {
+      value2 = e.target.value
+    }
+
+    confirmReply.onclick = (e) => {
+      reply2.style.display = 'none'
+      let liList = ulBox.children
+      if (value2 !== undefined && value2 !== '') {
+        
+        data.reply[id].children = data.reply[id].children || []
+        data.reply[id].children.push({name:"游客", content:value2})
+        let li = document.createElement('li')
+        let div = document.createElement('div')
+        let span = document.createElement('span')
+        span.className = 'name2'
+        span.innerText = '游客:' + value2
+        div.appendChild(span)
+        li.appendChild(div)
+        let btn = document.createElement('button')
+        btn.className = 'replyBtn2'
+        btn.innerText = '回复'
+        li.appendChild(btn)
+        btn.onclick = (e) => {
+          reply2.style.display = 'block'
+          reply2.style.marginTop = parent.window.parent.pageYOffset + 'px'
+        }
+        liList[id].appendChild(li)
+      }
+      replyInput2.value = ''
+    }
+  </script>
+</body>
+</html>

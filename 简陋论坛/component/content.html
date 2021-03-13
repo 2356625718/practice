@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  #mainBox{
+    height:1000px;
+  }
+
+  #title{
+    width:fit-content;
+    color:cornflowerblue;
+    font-size:1.8rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+    padding-bottom:0.5rem;
+    cursor: default;
+  }
+
+  #back{
+    position: absolute;
+    font-weight: bold;
+    color:rgb(102, 102, 228);
+    left:2rem;
+    cursor:pointer;
+  }
+
+  .line{
+    margin:0.5rem 0;
+    width:100%;
+    border-bottom: 0.7rem solid cornflowerblue;
+  }
+
+  #content{
+    letter-spacing: 0.1em;
+    text-indent:2.2em;
+    font-size:1.4rem;
+    color:black;
+    padding:1rem;
+    cursor: default;
+  }
+
+  .menu{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right:5rem;
+  }
+
+  #good {
+    width: 4rem;
+    height: 2rem;
+    font-size:1rem;
+    color:white;
+    background-color: rgb(156, 206, 247);
+    border-radius: 5%;
+    margin-right: 1rem;
+  }
+
+  #good:hover {
+    background-color: rgb(120, 184, 245);
+  }
+
+  #reply{
+    min-height: 120rem !important;
+    max-height: fit-content;
+  }
+</style>
+
+<body>
+  <div id="mainBox">
+    <div id="title"><span id="back"><</span><span id="titleText"></span></div>
+    <div class="line"></div>
+    <div id="content">
+      <span id="contentText">
+      </span>
+    </div>
+    <div class="menu">
+      <button id='good'>点赞</button>
+      <span>点赞量:<span id="goodNumber">0</span></span>
+    </div>
+    <div class="line"></div>
+    <iframe id='reply' name='reply' width='100%' scrolling="no" frameborder='0' src='./reply.html'></iframe>
+  </div>
+  <script type="module">
+    const contentText = document.getElementById('contentText')
+    const titleText = document.getElementById('titleText')
+    const goodBtn = document.getElementById('good')
+    const goodNumber = document.getElementById('goodNumber')
+
+    let article
+    const {port1, port2} = new MessageChannel()
+    window.port2 = port2
+    //点赞
+    goodBtn.onclick = () => {
+      goodNumber.innerText = ++article.good
+    }
+
+    //接收信息并发送信息
+    parent.port2.onmessage = (data) => {
+      article = data.data.message
+      port1.postMessage(article)
+      console.log(article)
+      contentText.innerText = article.content
+      titleText.innerText = article.title
+      goodNumber.innerText = article.good
+    }
+
+    //返回列表页
+    const back = document.getElementById('back')
+    back.addEventListener('click', () => {
+      parent.port2.postMessage({type:'BACK'})
+    })
+
+    
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type="module">
+    "use strict"
+    console.dir(Blob)
+    let blob = new Blob(["hello world"],{type:"text/plain"})
+    console.dir(blob)
+    let a = document.createElement('a')
+    a.download = 'hello.txt'
+    let reader = new FileReader()
+    reader.readAsDataURL(blob)
+    reader.onload = (e) => {
+      a.href = e.target.result
+      a.innerText = "下载"
+      let body = document.getElementsByTagName('body')[0]
+      body.append(a)
+    }
+    
+  </script>
+</body>
+</html>

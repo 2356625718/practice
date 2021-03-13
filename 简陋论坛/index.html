@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script type="text/javascript" src="./data.js"></script> -->
+  <style>
+    @import url('./index.css');
+  </style>
+</head>
+
+<body>
+  <header>
+    <iframe id="head" width="100%" scrolling="no" frameborder="0" src="./component/head.html">
+    </iframe>
+  </header>
+  <div id="flexBox">
+    <main>
+      <iframe id="main" name="main" width="100%" scrolling="no" frameborder="0" src="./component/main.html">
+      </iframe>
+      <iframe id="content" name="content" width="100%" scrolling="no" frameborder="0" src="./component/content.html">
+      </iframe>
+      <iframe id="editor" name="editor" width="100%" scrolling="no" frameborder="0" src="./component/editor.html">
+      </iframe>
+    </main>
+    <nav>
+      <iframe id="nav" width="100%" scrolling="no" frameborder="0" src="./component/nav.html">
+      </iframe>
+    </nav>
+  </div>
+  <script type="module">
+    import data from './data.js'
+    //设置共享数据
+    window.article = data.article
+    const main = document.getElementById('main')
+    const content = document.getElementById('content')
+    const editor = document.getElementById('editor')
+    let {port1, port2} = new MessageChannel()
+    window.port2 = port2
+    port1.onmessage = ({data}) => {
+      switch (data.type) {
+        case "INTO_CONTENT":
+          main.style.display = 'none'
+          content.style.display = 'block'
+          editor.style.display = 'none'
+          port1.postMessage(data)
+          return
+        case "BACK":
+          main.style.display = 'block'
+          content.style.display = 'none'
+          editor.style.display = 'none'
+          return
+        case "INTO_EDITOR":
+          editor.style.display = 'block'
+          main.style.display = 'none'
+          content.style.display = 'none'
+          return
+        case "ADD_DATA":
+          article.push(data.data)
+          window.add = true
+      }
+    }
+
+    
+  </script>
+</body>
+
+</html>

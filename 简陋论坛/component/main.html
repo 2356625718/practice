@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+  }
+
+  #list{
+    display: block;
+    list-style: none;
+    width:100%;
+    height:100% !important;
+    padding:1rem; 
+  }
+
+  .listItem{
+    height:6rem;
+    margin-top:1rem;
+    position: relative;
+    background-color: darkcyan;
+    cursor: pointer;
+  }
+
+  .xinxi{
+    width:30%;
+    height:5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left:1rem;
+    align-items: center;
+  }
+
+  #tou{
+    width:3rem;
+    height:3rem;
+    border-radius: 50%;
+  }
+
+  #name{
+    color:rgb(245, 120, 120);
+    position: absolute;
+    top:4rem;
+    left:1.4rem;
+  }
+
+  .introduce{
+    width:70%;
+  }
+
+  .title{
+    position: absolute;
+    left:6rem;
+    top:1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color:darkkhaki;
+  }
+
+  .text{
+    width:80%;
+    color:white;
+    position: absolute;
+    left:6rem;
+    top:3rem;
+  }
+</style>
+
+<body>
+  <div id="mainBox">
+  </div>
+  <script type="module">
+    //获取文章数据
+    const article = parent.article
+    //产生文章列表
+    const birthList = (article) => {
+      let ul = document.createElement('ul')
+      ul.id = 'list'
+      let liLists = article.map(item => {
+        let li = document.createElement('li')
+        li.className = 'listItem'
+        let div = document.createElement('div')
+        div.className = 'xinxi'
+        let img = document.createElement('img')
+        img.id = 'tou'
+        img.src = item.imgUrl
+        let span = document.createElement('span')
+        span.id = 'name'
+        span.innerText = item.author
+        div.appendChild(img)
+        div.appendChild(span)
+        let divIntro = document.createElement('div')
+        divIntro.className= 'introduce'
+        let divTitle = document.createElement('div')
+        divTitle.className = 'title'
+        divTitle.innerText = item.title
+        let divContent = document.createElement('div')
+        divContent.className = 'text'
+        divContent.innerText = item.content
+        divIntro.appendChild(divTitle)
+        divIntro.appendChild(divContent)
+        li.appendChild(div)
+        li.appendChild(divIntro)
+        li.addEventListener('click', () => {
+          parent.port2.postMessage({type:'INTO_CONTENT',message:item})
+        })
+        return li
+      })
+      liLists.forEach(item => ul.appendChild(item))
+      return ul
+    }
+
+    let mainBox = document.getElementById('mainBox')
+    let ul = birthList(article)
+    mainBox.appendChild(ul)
+    
+    let timerId = setInterval(() => {
+      if (parent.add) {
+        location.reload()
+        parent.add = false
+      }
+    },1000)
+  </script>
+</body>
+</html>

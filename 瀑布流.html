@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #itemBox {
+      width: 1080px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .item {
+      border: 1px solid black;
+      width: 202px;
+      padding: 2px;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="itemBox">
+    <div class="item">
+      <image src="./1.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./3.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./2.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./3.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./1.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./3.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./3.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./3.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./1.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./2.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./2.jpg"></image>
+    </div>
+    <div class="item">
+      <image src="./1.jpg"></image>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      var box = document.getElementById("itemBox")
+      var items = document.getElementsByClassName('item')
+      var boxWidth = box.offsetWidth
+      var itemWidth = items[0].offsetWidth
+      var column = parseInt(boxWidth/itemWidth)
+      var distance = (boxWidth - itemWidth*column)/(column-1)
+      var arr = []
+      var obj ={}
+      warterFull()
+
+      window.onscroll = function (){
+        var json = [
+          {src:"./1.jpg"},
+          {src:"./3.jpg"},
+          {src:"./2.jpg"},
+          {src:"./3.jpg"},
+          {src:"./3.jpg"},
+          {src:"./1.jpg"},
+          {src:"./2.jpg"},
+          {src:"./1.jpg"},
+          {src:"./3.jpg"},
+        ]
+        if(window.scrollY + window.innerHeight > smHeight().h){
+          for(let i=0;i<json.length;i++){
+            var div = document.createElement('div')
+            var img = document.createElement('img')
+            img.src = json[i].src
+            console.log(img)
+            div.className = 'item'
+            div.appendChild(img)
+            box.appendChild(div)
+          }
+        }
+        warterFull()
+      }
+
+      function warterFull(){
+        for(let i=0;i<items.length;i++){
+          if(i < column){
+            items[i].style.left = (itemWidth + distance) * i + 'px'
+            arr[i] = items[i].offsetHeight
+          }else{
+          obj = smHeight()
+          items[i].style.left = (itemWidth + distance) * obj.i + 'px'
+          items[i].style.top = obj.h + distance + 'px'
+          arr[obj.i] = obj.h + distance + items[i].offsetHeight
+        } 
+        }
+      }
+
+      function smHeight(){
+        var obj = {}
+        obj.h = arr[0]
+        obj.i = 0
+        for(let i = 1;i<arr.length;i++){
+          if(obj.h > arr[i]){
+            obj.i = i
+            obj.h = arr[i]
+          }
+        }
+        return obj
+      }
+    }
+  </script>
+</body>
+
+</html>

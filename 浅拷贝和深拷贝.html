@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var a = {
+      name:"objectaaaaa",
+      go:function(){
+        console.log("这是对象a的方法")
+      },
+      another:{
+        name:"不知道"
+      },
+      have:[1,2,5,6] 
+    }
+    
+
+    var b = {}
+    // for(var key in a){
+    //   b[key] = a[key]
+    // }
+
+    function deepCopy(a,b){
+      for(var key in a){
+        if(a[key] instanceof Array){
+          b[key] = []
+          deepCopy(a[key],b[key])
+        }else if(a[key] instanceof Object){
+          if(a[key] instanceof Function){
+            b[key] = a[key]
+          }else{
+            b[key] = {}
+            deepCopy(a[key],b[key])
+          }
+        }else{
+          b[key] = a[key]
+        }
+      }
+    }
+    deepCopy(a,b)
+    a.name = "wwwwqq"
+    a.another.name = "hahah"
+    console.log("a",a)
+    console.log("b",b)
+    b.go = function(){
+      console.log("this is b")
+    }
+    b.go()
+    a.go()
+  </script>
+</body>
+</html>

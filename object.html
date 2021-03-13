@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Hero(name,age){
+      this.name = name
+      this.age = age
+      this.print = function(){
+        console.log(this.name,this.age)
+      }
+    }
+
+    var zhouYu = new Hero("周雨",18)
+    zhouYu.print()
+    console.log(zhouYu.constructor)
+    console.log(zhouYu instanceof Object)
+    console.log(zhouYu instanceof Function)
+    console.log(zhouYu instanceof Array)
+    console.log(zhouYu instanceof Hero)
+
+    Hero.prototype.go = function (){
+      console.log(this.age)
+    }
+
+    zhouYu.go()
+    console.log(zhouYu)
+
+    Object.prototype.haha = function(){
+      console.log("hello")
+    }
+
+    zhouYu.haha()
+    console.log(Object.prototype.__proto__)
+  </script>
+</body>
+</html>

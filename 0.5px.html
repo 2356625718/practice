@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>zy</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width;initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <style>
+      #line::after {
+        content:'';
+        display:block;
+        height: 1px;
+        background-color: black;
+        transform: scale(1, 0.5);
+      }
+
+      #span {
+        width: 300px;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:3;
+         overflow:hidden
+      }
+    </style>
+  </head>
+  <body>
+    <div id="line"></div>
+    <div id="span">
+      asjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjasjdklasdhaskldasjdjadaskjdkjdsf
+    </div>
+  </body>
+</html>
